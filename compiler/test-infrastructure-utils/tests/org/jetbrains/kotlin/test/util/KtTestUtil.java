@@ -132,12 +132,12 @@ public class KtTestUtil {
 
     @NotNull
     public static File getJdk6Home() {
-        return getJdkHome("JDK_6", "JDK_16");
+        return getJdkHome("JDK_6", "JDK_1_6");
     }
 
     @NotNull
     public static File getJdk8Home() {
-        return getJdkHome("JDK_8", "JDK_18");
+        return getJdkHome("JDK_8", "JDK_1_8");
     }
 
     @NotNull

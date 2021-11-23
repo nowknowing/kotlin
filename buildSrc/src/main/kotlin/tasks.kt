@@ -226,6 +226,12 @@ fun Project.projectTest(
                 project.providers.gradleProperty("kotlin.test.maxParallelForks").forUseAtConfigurationTime().orNull?.toInt()
                     ?: (Runtime.getRuntime().availableProcessors() / if (project.kotlinBuildProperties.isTeamcityBuild) 2 else 4).coerceAtLeast(1)
         }
+
+        JdkMajorVersion.values().forEach { version ->
+            project.getToolchainLauncherFor(version).orNull?.let {
+                environment(version.name, it.metadata.installationPath.asFile.absolutePath)
+            }
+        }
     }.apply { configure(body) }
 }
 
