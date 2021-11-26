@@ -13,18 +13,21 @@ enum class JdkMajorVersion(
     val majorVersion: Int,
     val targetName: String = majorVersion.toString(),
     val overrideMajorVersion: Int? = null,
-    private val mandatory: Boolean = true
+    private val mandatory: Boolean = true,
+    envName: String? = null
 ) {
-    JDK_1_6(6, targetName = "1.6", overrideMajorVersion = 8),
-    JDK_1_7(7, targetName = "1.7", overrideMajorVersion = 8),
-    JDK_1_8(8, targetName = "1.8"),
+    JDK_1_6(6, targetName = "1.6", overrideMajorVersion = 8, envName = "JDK_16"),
+    JDK_1_7(7, targetName = "1.7", overrideMajorVersion = 8, envName = "JDK_17"),
+    JDK_1_8(8, targetName = "1.8", envName = "JDK_18"),
     JDK_9(9, overrideMajorVersion = 11),
     JDK_10(10, mandatory = false, overrideMajorVersion = 11),
     JDK_11(11, mandatory = false),
-    JDK_16(16, mandatory = false),
-    JDK_17(17, mandatory = false);
+    JDK_16(16, mandatory = false, envName = "JDK_16_0"),
+    JDK_17(17, mandatory = false, envName = "JDK_17_0");
 
     fun isMandatory(): Boolean = mandatory
+
+    val envName = envName ?: name
 
     companion object {
         fun fromMajorVersion(majorVersion: Int) = values().first { it.majorVersion == majorVersion }

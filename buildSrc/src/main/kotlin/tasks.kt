@@ -229,7 +229,7 @@ fun Project.projectTest(
 
         JdkMajorVersion.values().forEach { version ->
             project.getToolchainLauncherFor(version).orNull?.let {
-                environment(version.name, it.metadata.installationPath.asFile.absolutePath)
+                environment(version.envName, it.metadata.installationPath.asFile.absolutePath)
             }
         }
     }.apply { configure(body) }
