@@ -60,6 +60,9 @@ interface BaseKotlinCompile : KotlinCompileTool {
     @get:Input
     val moduleName: Property<String>
 
+    @get:Input
+    val ownModuleName: Property<String>
+
     @get:Internal
     val sourceSetName: Property<String>
 
