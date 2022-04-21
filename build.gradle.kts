@@ -81,6 +81,8 @@ val kotlinLanguageVersion by extra("1.7")
 allprojects {
     group = "org.jetbrains.kotlin"
     version = kotlinVersion
+    // TODO update to 16.14.2
+    extra["nodejsVersion"] = "16.13.0"
 }
 
 extra["kotlin_root"] = rootDir

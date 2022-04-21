@@ -14,7 +14,7 @@ plugins {
 
 node {
     download.set(true)
-    version.set("10.16.2")
+    version.set(extra["nodejsVersion"] as String)
     nodeProjectDir.set(buildDir)
 }
 
