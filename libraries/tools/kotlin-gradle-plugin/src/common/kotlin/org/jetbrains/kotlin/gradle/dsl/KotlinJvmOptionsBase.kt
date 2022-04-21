@@ -37,6 +37,13 @@ internal abstract class KotlinJvmOptionsBase : org.jetbrains.kotlin.gradle.dsl.K
             useFirField = value
         }
 
+    private var useK2Field: kotlin.Boolean? = null
+    override var useK2: kotlin.Boolean
+        get() = useK2Field ?: false
+        set(value) {
+            useK2Field = value
+        }
+
     private var javaParametersField: kotlin.Boolean? = null
     override var javaParameters: kotlin.Boolean
         get() = javaParametersField ?: false
@@ -69,6 +76,7 @@ internal abstract class KotlinJvmOptionsBase : org.jetbrains.kotlin.gradle.dsl.K
         apiVersion?.let { args.apiVersion = it }
         languageVersion?.let { args.languageVersion = it }
         useFirField?.let { args.useFir = it }
+        useK2Field?.let { args.useK2 = it }
         javaParametersField?.let { args.javaParameters = it }
         jvmTarget?.let { args.jvmTarget = it }
         moduleName?.let { args.moduleName = it }
@@ -84,6 +92,7 @@ internal fun org.jetbrains.kotlin.cli.common.arguments.K2JVMCompilerArguments.fi
     apiVersion = null
     languageVersion = null
     useFir = false
+    useK2 = false
     javaParameters = false
     jvmTarget = null
     moduleName = null

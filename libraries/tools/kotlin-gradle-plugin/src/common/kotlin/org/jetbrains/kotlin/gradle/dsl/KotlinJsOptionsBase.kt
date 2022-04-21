@@ -37,6 +37,13 @@ internal abstract class KotlinJsOptionsBase : org.jetbrains.kotlin.gradle.dsl.Ko
             useFirField = value
         }
 
+    private var useK2Field: kotlin.Boolean? = null
+    override var useK2: kotlin.Boolean
+        get() = useK2Field ?: false
+        set(value) {
+            useK2Field = value
+        }
+
     private var friendModulesDisabledField: kotlin.Boolean? = null
     override var friendModulesDisabled: kotlin.Boolean
         get() = friendModulesDisabledField ?: false
@@ -106,6 +113,7 @@ internal abstract class KotlinJsOptionsBase : org.jetbrains.kotlin.gradle.dsl.Ko
         apiVersion?.let { args.apiVersion = it }
         languageVersion?.let { args.languageVersion = it }
         useFirField?.let { args.useFir = it }
+        useK2Field?.let { args.useK2 = it }
         friendModulesDisabledField?.let { args.friendModulesDisabled = it }
         mainField?.let { args.main = it }
         metaInfoField?.let { args.metaInfo = it }
@@ -127,6 +135,7 @@ internal fun org.jetbrains.kotlin.cli.common.arguments.K2JSCompilerArguments.fil
     apiVersion = null
     languageVersion = null
     useFir = false
+    useK2 = false
     friendModulesDisabled = false
     main = "call"
     metaInfo = true

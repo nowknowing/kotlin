@@ -24,4 +24,10 @@ interface KotlinCommonOptions  : org.jetbrains.kotlin.gradle.dsl.KotlinCommonToo
      * Default value: false
      */
      var useFir: kotlin.Boolean
+
+    /**
+     * Compile using experimental K2 Compiler
+     * Default value: false
+     */
+     var useK2: kotlin.Boolean
 }

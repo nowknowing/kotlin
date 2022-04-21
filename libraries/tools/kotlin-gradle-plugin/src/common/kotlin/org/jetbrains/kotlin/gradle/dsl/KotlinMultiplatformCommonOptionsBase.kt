@@ -37,6 +37,13 @@ internal abstract class KotlinMultiplatformCommonOptionsBase : org.jetbrains.kot
             useFirField = value
         }
 
+    private var useK2Field: kotlin.Boolean? = null
+    override var useK2: kotlin.Boolean
+        get() = useK2Field ?: false
+        set(value) {
+            useK2Field = value
+        }
+
     internal open fun updateArguments(args: org.jetbrains.kotlin.cli.common.arguments.K2MetadataCompilerArguments) {
         allWarningsAsErrorsField?.let { args.allWarningsAsErrors = it }
         suppressWarningsField?.let { args.suppressWarnings = it }
@@ -44,6 +51,7 @@ internal abstract class KotlinMultiplatformCommonOptionsBase : org.jetbrains.kot
         apiVersion?.let { args.apiVersion = it }
         languageVersion?.let { args.languageVersion = it }
         useFirField?.let { args.useFir = it }
+        useK2Field?.let { args.useK2 = it }
     }
 }
 
@@ -54,4 +62,5 @@ internal fun org.jetbrains.kotlin.cli.common.arguments.K2MetadataCompilerArgumen
     apiVersion = null
     languageVersion = null
     useFir = false
+    useK2 = false
 }

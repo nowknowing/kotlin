@@ -299,6 +299,13 @@ abstract class CommonCompilerArguments : CommonToolArguments() {
     )
     var useFir: Boolean by FreezableVar(false)
 
+    @GradleOption(DefaultValues.BooleanFalseDefault::class)
+    @Argument(
+        value = "-Xuse-k2",
+        description = "Compile using experimental K2 Compiler"
+    )
+    var useK2: Boolean by FreezableVar(false)
+
     @Argument(
         value = "-Xuse-fir-extended-checkers",
         description = "Use extended analysis mode based on Front-end IR. Warning: this feature is far from being production-ready"
