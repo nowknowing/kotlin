@@ -11,6 +11,7 @@
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
+#include "AllocatorTestSupport.hpp"
 #include "ScopedThread.hpp"
 #include "TestSupport.hpp"
 #include "Types.h"
@@ -416,4 +417,26 @@ TEST(SingleLockListTest, Destructor) {
             EXPECT_CALL(hook, Call(first));
         }
     }
+}
+
+TEST(SingleLockListTest, CustomAllocator) {
+    test_support::CountingAllocatorBase allocator;
+    auto a = test_support::MakeAllocator<int>(allocator);
+    SingleLockList<int, SpinLock<MutexThreadStateHandling::kIgnore>, decltype(a)> list(a);
+    auto* node1 = list.Emplace(1);
+    auto* node2 = list.Emplace(2);
+    auto* node3 = list.Emplace(3);
+    EXPECT_THAT(allocator.size(), 3);
+    EXPECT_THAT(allocator.find(node1), sizeof(*node1));
+    EXPECT_THAT(allocator.find(node2), sizeof(*node1));
+    EXPECT_THAT(allocator.find(node3), sizeof(*node1));
+    list.Erase(node2);
+    EXPECT_THAT(allocator.size(), 2);
+    EXPECT_THAT(allocator.find(node2), std::nullopt);
+    list.Erase(node1);
+    list.Erase(node3);
+    EXPECT_THAT(allocator.size(), 0);
+    EXPECT_THAT(allocator.find(node1), std::nullopt);
+    EXPECT_THAT(allocator.find(node2), std::nullopt);
+    EXPECT_THAT(allocator.find(node3), std::nullopt);
 }

@@ -10,6 +10,7 @@
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
+#include "AllocatorTestSupport.hpp"
 #include "ScopedThread.hpp"
 #include "TestSupport.hpp"
 #include "Types.h"
@@ -311,4 +312,47 @@ TEST(MultiSourceQueueTest, ConcurrentPublishAndApplyDeletions) {
 
     auto actual = Collect(queue);
     EXPECT_THAT(actual, testing::IsEmpty());
+}
+
+TEST(MultiSourceQueueTest, CustomAllocator) {
+    test_support::CountingAllocatorBase allocator;
+    auto a = test_support::MakeAllocator<int>(allocator);
+
+    using Queue = MultiSourceQueue<int, SpinLock<MutexThreadStateHandling::kIgnore>, decltype(a)>;
+    Queue queue(a);
+    Queue::Producer producer1(queue);
+    Queue::Producer producer2(queue);
+
+    auto* node11 = producer1.Insert(1);
+    auto* node12 = producer1.Insert(2);
+    auto* node21 = producer2.Insert(10);
+    auto* node22 = producer2.Insert(20);
+    auto* node23 = producer2.Insert(30);
+
+    EXPECT_THAT(allocator.size(), 5);
+
+    producer2.Erase(node22);
+
+    EXPECT_THAT(allocator.size(), 4);
+
+    producer1.Publish();
+    producer2.Publish();
+
+    EXPECT_THAT(allocator.size(), 4);
+
+    producer1.Erase(node11);
+    producer1.Erase(node23);
+    producer2.Erase(node12);
+    producer2.Erase(node21);
+
+    EXPECT_THAT(allocator.size(), 8);
+
+    producer1.Publish();
+    producer2.Publish();
+
+    EXPECT_THAT(allocator.size(), 8);
+
+    queue.ApplyDeletions();
+
+    EXPECT_THAT(allocator.size(), 0);
 }
