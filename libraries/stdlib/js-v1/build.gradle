@@ -336,7 +336,7 @@ artifacts {
 
 node {
     download = true
-    version = project.ext["nodejsVersion"]
+    version = property("versions.nodejs")
     nodeProjectDir = buildDir
 }
 

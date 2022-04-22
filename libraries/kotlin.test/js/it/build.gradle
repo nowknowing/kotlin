@@ -51,7 +51,7 @@ tasks.register("populateNodeModules", Copy) {
 }
 
 node {
-    version = project.ext["nodejsVersion"]
+    version = property("versions.nodejs")
     download = true
 }
 

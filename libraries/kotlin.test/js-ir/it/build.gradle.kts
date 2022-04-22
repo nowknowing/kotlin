@@ -12,7 +12,7 @@ plugins {
 description = "Kotlin-test integration tests for JS IR"
 
 node {
-    version.set(extra["nodejsVersion"] as String)
+    version.set(nodejsVersion)
     download.set(true)
 }
 
