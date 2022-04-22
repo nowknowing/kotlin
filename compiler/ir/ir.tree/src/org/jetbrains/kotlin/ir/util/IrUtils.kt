@@ -273,7 +273,7 @@ val IrDeclaration.parentAsClass: IrClass
     get() = parent as? IrClass
         ?: error("Parent of this declaration is not a class: ${render()}")
 
-fun IrElement.getPackageFragment() =
+fun IrElement.getPackageFragment(): IrPackageFragment? =
     this as? IrPackageFragment ?: (this as? IrDeclaration)?.getPackageFragment()
 
 tailrec fun IrDeclaration.getPackageFragment(): IrPackageFragment {
