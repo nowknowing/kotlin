@@ -40,6 +40,9 @@ internal class NativeCompileOptions(languageSettingsProvider: () -> LanguageSett
     override var useFir: Boolean
         get() = false
         set(@Suppress("UNUSED_PARAMETER") value) {}
+    override var useK2: Boolean
+        get() = false
+        set(@Suppress("UNUSED_PARAMETER") value) {}
 
     override var allWarningsAsErrors: Boolean = false
     override var suppressWarnings: Boolean = false
