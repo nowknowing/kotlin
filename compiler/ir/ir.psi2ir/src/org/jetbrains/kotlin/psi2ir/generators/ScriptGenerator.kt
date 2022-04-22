@@ -37,6 +37,7 @@ import org.jetbrains.kotlin.psi2ir.intermediate.createTemporaryVariableInBlock
 import org.jetbrains.kotlin.psi2ir.intermediate.setExplicitReceiverValue
 import org.jetbrains.kotlin.resolve.BindingContext
 import org.jetbrains.kotlin.resolve.calls.util.isSingleUnderscore
+import org.jetbrains.kotlin.types.typeUtil.makeNullable
 import org.jetbrains.kotlin.utils.addIfNotNull
 
 class ScriptGenerator(declarationGenerator: DeclarationGenerator) : DeclarationGeneratorExtension(declarationGenerator) {
@@ -113,7 +114,7 @@ class ScriptGenerator(declarationGenerator: DeclarationGenerator) : DeclarationG
                 .map { (providedProperty, parameter) ->
                     // TODO: initializer
                     // TODO: do not keep direct links
-                    val type = providedProperty.type.toIrType()
+                    val type = providedProperty.type.makeNullable().toIrType()
                     val valueParameter = context.symbolTable.declareValueParameter(
                         UNDEFINED_OFFSET, UNDEFINED_OFFSET,
                         IrDeclarationOrigin.SCRIPT_PROVIDED_PROPERTY, parameter, type

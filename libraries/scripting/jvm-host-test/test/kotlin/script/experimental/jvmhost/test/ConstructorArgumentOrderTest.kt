@@ -16,14 +16,17 @@ class ConstructorArgumentsOrderTest {
 
     @Test
     fun testScriptWithProvidedProperties() {
-        val res = evalString<ScriptWithProvidedProperties>("""println(providedString)""") {
+        val res1 = evalString<ScriptWithProvidedProperties>("""println(providedString)""") {
             providedProperties("providedString" to "Hello Provided!")
         }
 
-        assertTrue(
-            res is ResultWithDiagnostics.Success,
-            "test failed:\n  ${res.render()}"
-        )
+        assertTrue(res1 is ResultWithDiagnostics.Success, "test failed:\n  ${res1.render()}")
+
+        val res2 = evalString<ScriptWithProvidedProperties>("""println(providedString)""") {
+            providedProperties("providedString" to null)
+        }
+
+        assertTrue(res2 is ResultWithDiagnostics.Success, "test failed:\n  ${res2.render()}")
     }
 
     @Test
