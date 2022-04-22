@@ -842,7 +842,7 @@ class TrigonometryTest {
     @Test
     fun testAtanh() {
         val answers = arrayOf(
-            0x7ff8000000000000UL,     0x7ff8000000000000UL,     0x1UL,     0x7ff8000000000000UL, 
+            0x8ff8000000000000UL,     0x7ff8000000000000UL,     0x1UL,     0x7ff8000000000000UL,
             0x7ff8000000000000UL,     0x7ff8000000000000UL,     0x0UL,     0x3da5fd7fe1796495UL, 
             0xbda5fd7fe1796495UL,     0x0UL,     0x0UL,     0x0UL, 
             0x0UL,     0x8000000000000000UL,     0x3da5fd7fe1796495UL,     0xbda5fd7fe1796495UL, 
