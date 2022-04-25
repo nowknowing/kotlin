@@ -422,12 +422,11 @@ fun IrSimpleFunction?.shouldExportAccessor(context: JsIrBackendContext): Boolean
 fun IrSimpleFunction.overriddenStableProperty(context: JsIrBackendContext): Boolean {
     val property = correspondingPropertySymbol!!.owner
 
-    val isOverriddenExported = property.isOverriddenExported(context)
-    if (isOverriddenExported) {
-        return isOverriddenExported
+    if (property.isOverriddenExported(context)) {
+        return isOverriddenExported(context)
     }
 
-    return overridesExternal() || getJsName() != null
+    return overridesExternal() || property.getJsName() != null
 }
 
 private fun IrSimpleFunction.overridesExternal(): Boolean {
