@@ -88,7 +88,7 @@ auto MakeAllocator(Base& base) {
 
 template <typename T, typename U, typename Base>
 bool operator==(const Allocator<T, Base>& lhs, const Allocator<U, Base>& rhs) noexcept {
-    return &lhs.base_ == &rhs.base_;
+    return lhs.base_ == rhs.base_;
 }
 
 template <typename T, typename U, typename Base>
