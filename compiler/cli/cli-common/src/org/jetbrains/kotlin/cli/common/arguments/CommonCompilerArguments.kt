@@ -294,15 +294,9 @@ abstract class CommonCompilerArguments : CommonToolArguments() {
 
     @GradleOption(DefaultValues.BooleanFalseDefault::class)
     @Argument(
-        value = "-Xuse-fir",
-        description = "Compile using Front-end IR. Warning: this feature is far from being production-ready"
-    )
-    var useFir: Boolean by FreezableVar(false)
-
-    @GradleOption(DefaultValues.BooleanFalseDefault::class)
-    @Argument(
         value = "-Xuse-k2",
-        description = "Compile using experimental K2 Compiler"
+        deprecatedName = "-Xuse-fir",
+        description = "Compile using expiremental K2. K2 is a new compiler pipeline, no compatibility guarantees are yet provided"
     )
     var useK2: Boolean by FreezableVar(false)
 
