@@ -416,13 +416,18 @@ fun IrSimpleFunction?.shouldExportAccessor(context: JsIrBackendContext): Boolean
 
     if (parentAsClass.isExported(context)) return true
 
+    return overriddenStableProperty(context)
+}
+
+fun IrSimpleFunction.overriddenStableProperty(context: JsIrBackendContext): Boolean {
     val property = correspondingPropertySymbol!!.owner
 
-    if (property.isOverriddenExported(context)) {
-        return isOverriddenExported(context)
+    val isOverriddenExported = property.isOverriddenExported(context)
+    if (isOverriddenExported) {
+        return isOverriddenExported
     }
 
-    return overridesExternal() || property.getJsName() != null
+    return overridesExternal() || getJsName() != null
 }
 
 private fun IrSimpleFunction.overridesExternal(): Boolean {

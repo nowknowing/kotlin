@@ -9,19 +9,16 @@ import org.jetbrains.kotlin.descriptors.isClass
 import org.jetbrains.kotlin.descriptors.isInterface
 import org.jetbrains.kotlin.ir.backend.js.JsIrBackendContext
 import org.jetbrains.kotlin.ir.backend.js.export.isExported
-import org.jetbrains.kotlin.ir.backend.js.transformers.irToJs.shouldExportAccessor
 import org.jetbrains.kotlin.ir.declarations.IrClass
 import org.jetbrains.kotlin.ir.declarations.IrDeclaration
 import org.jetbrains.kotlin.ir.declarations.IrDeclarationWithVisibility
-import org.jetbrains.kotlin.ir.declarations.IrSimpleFunction
 import org.jetbrains.kotlin.ir.expressions.IrReturn
 import org.jetbrains.kotlin.ir.symbols.IrReturnableBlockSymbol
 import org.jetbrains.kotlin.ir.util.parentClassOrNull
 
 fun IrDeclaration.isExportedMember(context: JsIrBackendContext) =
     (this is IrDeclarationWithVisibility && visibility.isPublicAPI) &&
-            parentClassOrNull?.isExported(context) == true &&
-            (this is IrSimpleFunction && this.correspondingPropertySymbol != null && this.shouldExportAccessor(context))
+            parentClassOrNull?.isExported(context) == true
 
 fun IrDeclaration?.isExportedClass(context: JsIrBackendContext) =
     this is IrClass && kind.isClass && isExported(context)
